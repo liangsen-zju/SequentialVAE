@@ -31,9 +31,8 @@ VAE model for sequencial data, which including:
     ```
 
 * result
-Generating results on MNIST dataset after 1000 epoches:
-  	![Fig](img1.png)  
-
+    Generating results on MNIST dataset after 1000 epoches:
+  	    ![Fig](doc/img/VRNN-generation-0204-0000.png)  
 
 
 ### (2) conditional VRNN network
@@ -46,3 +45,6 @@ Generating results on MNIST dataset after 1000 epoches:
     ```
     python generate.py --opt experiments/VRNN/test-ConditionallVAE-VRNN-MINIST.yaml 
     ```
+
+    Generating results on MNIST dataset after 1000 epoches:
+  	    ![Fig](doc/img/cond-generation-0950-0000.png)  

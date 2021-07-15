@@ -62,10 +62,10 @@ class SequencialVAEModel(Base):
         # print(f"data shape = {self.data.shape}, anno shape = {self.anno.shape}")
 
 
-    def update_parameters(self, epoch):
+    def update_parameters(self, cur_epoch):
         # update beta
         n_period = self.opt.TRAIN.epoch_end / self.opt.TRAIN.n_cycle 
-        n_curr = epoch % n_period 
+        n_curr = cur_epoch % n_period 
 
         step = (self.opt.TRAIN.beta_stop - self.opt.TRAIN.beta_start) / (0.4 * n_period )
 
@@ -109,7 +109,7 @@ class SequencialVAEModel(Base):
             pass
 
 
-    def testing(self, batch_input=None, epoch=0, batch=0):
+    def testing(self, batch_input=None, cur_epoch=0, cur_batch=0):
         self.eval()    # set eval model
 
         B, N = 100, 28
@@ -120,7 +120,7 @@ class SequencialVAEModel(Base):
         samples = samples.cpu().numpy().reshape(10, 10, 28, 28)
         samples = samples.transpose(0, 2, 1, 3).reshape(10*28, 10*28)
         
-        path_save =  Path(self.opt.OUTPUT_DIR,f"generation-{epoch:04d}-{batch:04d}.png")
+        path_save =  Path(self.opt.OUTPUT_DIR,f"generation-{cur_epoch:04d}-{cur_batch:04d}.png")
         samples = (samples * 255).astype(np.uint8)
         cv2.imwrite(str(path_save), samples)
          

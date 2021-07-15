@@ -73,7 +73,10 @@ class ConditionalVAEModel(Base):
 
         step = (self.opt.TRAIN.beta_stop - self.opt.TRAIN.beta_start) / (0.4 * n_period )
 
-        if n_curr < 0.4 * n_period:
+
+        if n_curr < max(10, 0.1 * n_period):
+            beta_update = min(step * n_curr, 0.0001 * n_curr)
+        elif n_curr < 0.4 * n_period:
             beta_update = step * n_curr  
         elif n_curr < 0.6 * n_period:
             beta_update = self.opt.TRAIN.beta_stop
