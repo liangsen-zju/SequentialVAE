@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+
+.vscode
+_MACOSX
+
+
+**/build
+**/dist
+**/*.egg-info
+data

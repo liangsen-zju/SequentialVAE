@@ -1,0 +1,79 @@
+GPUS: '0'
+WORKERS: 8
+OUTPUT_DIR: 'experiments/VRNN'
+DEBUG: False
+
+verbose: False
+
+
+VISUAL:
+  use_HTML: False
+  use_visdom: True
+  vsdm_port: 9000
+  vsdm_ncol: 3
+  vsdm_env: "CVRNN-MNIST"
+
+FREQ:
+  batch_save: 0
+  epoch_save: 5
+  batch_display: 20
+  epoch_display: 1
+  batch_print: 20
+  epoch_print: 1
+  update_html: 100
+  batch_test: 1000
+  epoch_test: 1
+
+MODEL:
+  name: 'ConditionalVAE'
+  name_netG: "ConditionalVRNN"
+  p_use_pt: 0
+  n_rnn_layers: 2
+
+  dim_x: 28       
+  dim_z: 16
+  dim_h: 32
+  dim_c: 1
+
+
+  pretrain: True
+  path_checkpoint: "experiments/VRNN/train-ConditionallVAE-VRNN-MINIST/20210714-17H34M28S"
+  load_epoch: 40
+
+
+DATASET:
+  root: './data'
+  name: "MINIST"
+
+
+TRAIN:
+  lr: 0.00001
+  batch_size: 800
+  shuffle: True
+
+  n_cycle: 10
+  beta_start: 0.0
+  beta_stop: 1.0
+
+  optimizer: 'SGD'
+  momentum: 0.9
+  beta1: 0.5
+  beta2: 0.999
+  weight_decay: 0.0001
+  nesterov: True
+  grad_clip_norm: True
+  max_grad_clip: 5
+  max_grad_norm: 100
+  lr_policy: 'plateau'
+
+  resume: True
+  reset_lr: True
+  resume_suffix: "20210714-18H46M59S"
+  epoch_begin: 120 # 5000  # 2300 # 2600
+  epoch_end: 1000
+
+
+LOSS:
+  names: ["all", "rec", "kld"] 
+  lambda_rec: 10
+  lambda_kld: 0.001

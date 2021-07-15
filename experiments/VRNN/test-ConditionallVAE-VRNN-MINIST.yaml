@@ -1,0 +1,28 @@
+GPUS: '0'
+WORKERS: 8
+OUTPUT_DIR: 'experiments/VRNN'
+DEBUG: False
+
+verbose: False
+
+
+MODEL:
+  name: 'ConditionalVAE'
+  name_netG: "ConditionalVRNN"
+  p_use_pt: 0
+  n_rnn_layers: 2
+
+  dim_x: 28       
+  dim_z: 16
+  dim_h: 32
+  dim_c: 1
+
+
+  pretrain: True
+  path_checkpoint: "experiments/VRNN/train-ConditionallVAE-VRNN-MINIST/20210714-17H34M28S"
+  load_epoch: 40
+
+
+DATASET:
+  root: './data'
+  name: "MINIST"
