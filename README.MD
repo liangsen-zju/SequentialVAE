@@ -32,7 +32,9 @@ VAE model for sequencial data, which including:
 
 * result
     Generating results on MNIST dataset after 1000 epoches:
-  	    ![Fig](doc/img/VRNN-generation-0204-0000.png)  
+
+
+  	![Fig](doc/img/VRNN-generation-0204-0000.png)  
 
 
 ### (2) conditional VRNN network
@@ -47,4 +49,6 @@ VAE model for sequencial data, which including:
     ```
 
     Generating results on MNIST dataset after 1000 epoches:
-  	    ![Fig](doc/img/cond-generation-0950-0000.png)  
+
+
+  	![Fig](doc/img/cond-generation-0950-0000.png)  

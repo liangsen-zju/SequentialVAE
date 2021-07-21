@@ -46,29 +46,29 @@ DATASET:
 
 
 TRAIN:
-  lr: 0.01
+  lr: 0.001
   batch_size: 800
   shuffle: True
 
-  n_cycle: 10
+  n_cycle: 4
   beta_start: 0.0
   beta_stop: 1.0
 
-  optimizer: 'SGD'
+  optimizer: 'Adam'
   momentum: 0.9
   beta1: 0.5
   beta2: 0.999
   weight_decay: 0.0001
-  nesterov: True
+  nesterov: False
   grad_clip_norm: True
   max_grad_clip: 5
   max_grad_norm: 100
   lr_policy: 'plateau'
 
-  resume: False
+  resume: True
   reset_lr: True
-  resume_suffix: "20210714-18H46M59S"
-  epoch_begin: 0 # 5000  # 2300 # 2600
+  resume_suffix: "20210715-13H16M55S"
+  epoch_begin: 10 # 5000  # 2300 # 2600
   epoch_end: 1000
 
 

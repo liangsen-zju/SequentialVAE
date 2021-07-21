@@ -71,19 +71,27 @@ class ConditionalVAEModel(Base):
         n_period = self.opt.TRAIN.epoch_end / self.opt.TRAIN.n_cycle 
         n_curr = epoch % n_period 
 
-        step = (self.opt.TRAIN.beta_stop - self.opt.TRAIN.beta_start) / (0.4 * n_period )
-
 
         if n_curr < max(10, 0.1 * n_period):
-            beta_update = min(step * n_curr, 0.0001 * n_curr)
+            step = 0.0001
+            beta_update = 0.0001 * n_curr
+
         elif n_curr < 0.4 * n_period:
-            beta_update = step * n_curr  
+            n_start = max(10, 0.1 * n_period)
+            n_end   = 0.4 * n_period
+            step = (self.opt.TRAIN.beta_stop - 0.0001*n_start ) / (n_end - n_start) 
+            beta_update =  0.0001*n_start + step * (n_curr - n_start)
+
         elif n_curr < 0.6 * n_period:
             beta_update = self.opt.TRAIN.beta_stop
+        
         else:
+            step = (self.opt.TRAIN.beta_stop - self.opt.TRAIN.beta_start) / (0.4 * n_period )
             beta_update = step * (n_period - n_curr)
         
+
         self.opt.LOSS.lambda_kld = beta_update
+
         self.logger.info(f"\t[UPDATE] lambda_kld = {self.opt.LOSS.lambda_kld}")
 
 
@@ -133,15 +141,11 @@ class ConditionalVAEModel(Base):
             samples = (samples * 255).astype(np.uint8)
             cv2.imwrite(str(path_save), samples)
          
-    # def get_test_visuals(self):
-    #     """Return visualization images. train.py will display these images with 
-    #     visdom, and save the images to a HTML"""
-    #     visual_dict = OrderedDict()
-
-    #     batch_pred = self.pred.detach().cpu().numpy()   # (B, 28, 28)
-
-
-    #     return visual_dict
+    def get_test_visuals(self):
+        """Return visualization images. train.py will display these images with 
+        visdom, and save the images to a HTML"""
+        visual_dict = OrderedDict()
+        return visual_dict
 
 
     def get_train_visuals(self, isTrain=True):
@@ -178,7 +182,7 @@ class ConditionalVAEModel(Base):
         return visual_dict
 
 
-#########################################
+#######################
 def define_netG(opt):
     netG = None
     if opt.MODEL.name_netG == "ConditionalVRNN":
